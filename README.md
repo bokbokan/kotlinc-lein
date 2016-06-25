@@ -3,10 +3,7 @@
 A Leiningen plugin for compiling Kotlin source files. It behaves similarly with the Leiningen javac plugin.
 
 ####Latest version:
-
-```clojure
-[kotlinc-lein "0.1.0"]
-```
+[![Clojars Project](https://img.shields.io/clojars/v/kotlinc-lein.svg)](https://clojars.org/kotlinc-lein)
 
 Include the dependency as shown above in your project.clj or `:user` of profiles.clj
 
