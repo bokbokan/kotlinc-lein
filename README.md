@@ -72,7 +72,6 @@ To use different version of the Kotlin compiler, you can do it like so:
   :min-lein-version        "2.0.0"
   :source-paths            ["src/clojure"]
   :kotlin-source-paths     ["src/kotlin"]
-  :kotlinc-options         ["-jvm-target" "1.6" "-language-version" "1.0"])
   :kotlin-compiler-version "1.1-SNAPSHOT"
   :repositories            [["snapshots" "http://oss.sonatype.org/content/repositories/snapshots"]]
 ```
