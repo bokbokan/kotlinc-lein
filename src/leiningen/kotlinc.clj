@@ -16,10 +16,6 @@
                        (file-seq (io/file dir)))]
     (.getPath source)))
 
-(defn- safe-quote [s]
-  (str "\"" (string/replace s "\\" "\\\\") "\"")
-  s)
-
 ;; Tool's .run method expects the last argument to be an array of
 ;; strings, so that's what we'll return here.
 (defn- kotlinc-options
@@ -27,9 +23,9 @@
   Result is a String java array of options."
   [project files args]
   (into-array String
-    (filter #(not-empty %) (flatten ["-cp" (safe-quote (classpath/get-classpath-string project))
-                                     "-d" (safe-quote (:compile-path project)) "-nowarn"
-                                     (:kotlinc-options project) args (map safe-quote files)]))))
+    (filter #(not-empty %) (flatten ["-cp" (classpath/get-classpath-string project)
+                                     "-d" (:compile-path project) "-nowarn"
+                                     (:kotlinc-options project) args files]))))
 
 ;; Pure kotlin projects will not have Clojure on the classpath. As such, we need
 ;; to add it if it's not already there.
@@ -47,7 +43,7 @@
   (main/debug "Running kotlinc with" kotlinc-opts)
   `(do
      (binding [*out* *err*]
-       (println "Compiling" ~(count files) "source files to" ~compile-path))
+       (println "Compiling" ~(count files) "source file(s) to" ~compile-path))
      (.mkdirs (clojure.java.io/file ~compile-path))
      (org.jetbrains.kotlin.cli.jvm.K2JVMCompiler/main (into-array String ~kotlinc-opts))))
 
@@ -72,7 +68,7 @@
         (binding [eval/*pump-in* false]
           (eval/eval-in
             (dissoc (project/merge-profiles (project/merge-profiles project [subprocess-profile])
-                      [(compiler-profile version)]) :prep-tasks)
+                      [(compiler-profile version)]) :source-paths)
             form))
         (catch Exception e
           (if-let [exit-code (:exit-code (ex-data e))]
