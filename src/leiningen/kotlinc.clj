@@ -61,7 +61,7 @@
   (let [compile-path (:compile-path project)
         files (kotlin-sources (:kotlin-source-paths project))
         kotlinc-opts (vec (kotlinc-options project files args))
-        version (or (:kotlin-compiler-version project) "1.0.2")
+        version (or (:kotlin-compiler-version project) "1.0.3")
         form (subprocess-form compile-path files kotlinc-opts)]
     (when (seq files)
       (try
