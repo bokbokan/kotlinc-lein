@@ -1,4 +1,4 @@
-(defproject kotlinc-lein "0.1.1"
+(defproject kotlinc-lein "0.1.2"
   :description "A Leiningen plugin for compiling Kotlin sources"
   :url "https://github.com/bokbokan/kotlinc-lein"
   :license {:name "Eclipse Public License"
